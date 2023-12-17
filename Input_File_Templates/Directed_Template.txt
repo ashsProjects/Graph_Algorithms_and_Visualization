@@ -1,0 +1,10 @@
+# This is a template for working with directed graphs. In the adjacency list below, you can change the name of the nodes to 
+# anything. By default, they are A, B, C, and D. You can also add more to the end in the same format. To add edges, you can
+# enter a tuple within the list for a vertex. Within this tuple should be the end node and the weight of that edge. To add
+# more outgoing edges from a vertex, use commas to separate the tuples. Use # for comments as they will be ignored.
+# Please delete unneeded, empty vertices that do not have any outgoing edges.
+#
+A: [(B 10), (C 5)]#For example, this would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5
+B: [()]
+C: [()]
+D: [()]
