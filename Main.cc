@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <filesystem>
 #include "Undirected.h"
 #include "Directed.h"
 
@@ -36,8 +37,11 @@ void start_directed() {
 
         switch (choice) {
             case 1:
-                d_graph.ShowGraph();
+            {
+                string command = filesystem::current_path().string() + "\\Graph_PNGs\\normal_directed_graph.png";
+                system(command.c_str());
                 break;
+            }
             case 2:
                 d_graph.Dijkstra();
                 break;
@@ -162,7 +166,7 @@ int main(int argc, char **argv)
         #else
             cout << "Sorry, this program is built to run only on Windows!" << endl;
         #endif
-    #else 
+    #else
         cout << "Sorry, this program was built to compile on C++ version >= 11!" << endl;
     #endif
     return 0;

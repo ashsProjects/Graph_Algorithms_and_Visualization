@@ -1,8 +1,26 @@
 #ifndef DIRECTED_H_DEFINED
 #define DIRECTED_H_DEFINED
+#include <string>
+#include <vector>
+#include <set>
 
 using namespace std;
 class Directed {
+    struct Edge {
+        string starting_node;
+        string ending_node;
+        double weight;
+        string features = "color=black";
+    };
+    struct Node {
+        string label;
+        vector<Edge> edges;
+    };
+    vector<Edge> all_edges;
+    vector<Node> all_nodes;
+    set<string> node_labels;
+
+
     public:
         /** 
          * @param None
@@ -32,10 +50,10 @@ class Directed {
          * @param None
          * @returns A default constructor declaration.
         */
-        Directed();
+        Directed() {ReadGraph(); ShowGraph("normal_directed_graph.png");}
 
         void ReadGraph();
-        void ShowGraph();
+        void ShowGraph(const string& output_name);
         void Dijkstra();
         void MSTPrim();
         void MSTKruskal();

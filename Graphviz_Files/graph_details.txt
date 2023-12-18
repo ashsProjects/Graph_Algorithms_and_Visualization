@@ -1,0 +1,5 @@
+strict digraph d_graph {
+A -> B [label=10, color=black];
+A -> C [label=50, color=black];
+B -> C [label=15, color=black];
+}
