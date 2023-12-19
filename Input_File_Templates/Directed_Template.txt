@@ -4,5 +4,7 @@
 # To add more outgoing edges from a vertex, use commas to separate them. Use # for comments as they will be ignored.
 # Please delete unneeded, empty vertices that do not have any outgoing edges.
 #
-A: [B:10, C:50]#For example, this would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5
-B: [C:15]
+a: [b:2]#For example, this would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5
+b: [a:5, c:1]
+c: [a:1]
+s: [c:7, b:2]

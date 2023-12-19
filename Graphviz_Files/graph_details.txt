@@ -1,5 +1,8 @@
 strict digraph d_graph {
-A -> B [label=10, color=black];
-A -> C [label=50, color=black];
-B -> C [label=15, color=black];
+a -> b [label=2, color=black];
+b -> a [label=5, color=black];
+b -> c [label=1, color=red];
+c -> a [label=1, color=red];
+s -> c [label=7, color=black];
+s -> b [label=2, color=red];
 }

@@ -38,8 +38,6 @@ class Undirected {
         void ShowGraph();
         void Dijkstra();
         void MSTPrim();
-        void MSTKruskal();
-        void MSTReverse();
         void BFS();
         void DFS();
         void AdjacencyMatrix();

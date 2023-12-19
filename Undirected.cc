@@ -20,14 +20,6 @@ void Undirected::MSTPrim()
 {
 }
 
-void Undirected::MSTKruskal()
-{
-}
-
-void Undirected::MSTReverse()
-{
-}
-
 void Undirected::BFS()
 {
 }

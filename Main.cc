@@ -10,17 +10,16 @@ void start_directed() {
     Directed d_graph;
 
     while (1) {
-        cout << "Pick from the options below for algorithms regarding an directed graph:" << endl;
-        cout << "\t1. Show the graph visually" << endl;
-        cout << "\t2. Single Source Shortest Path with Dijkstra" << endl;
-        cout << "\t3. Minimum Spanning Tree using Prim's" << endl;
-        cout << "\t4. Minimum Spanning Tree with Kruskal's" << endl;
-        cout << "\t5. Minimum Spanning Tree with Reverse Delete" << endl;
-        cout << "\t6. Breadth First Search" << endl;
-        cout << "\t7. Depth First Search" << endl;
-        cout << "\t8. Print Adjacency Matrix" << endl;
-        cout << "\t9. Single Destination Shortest Path with Bellman Ford" << endl;
-        cout << "Enter q to quit" << endl;
+        string directed_options = "Pick from the options below for algorithms regarding an directed graph:\n";
+        directed_options += "\t1. Show the graph visually\n";
+        directed_options += "\t2. Single Source Shortest Path with Dijkstra\n";
+        directed_options += "\t3. Minimum Spanning Tree using Prim's\n";
+        directed_options += "\t4. Breadth First Search\n";
+        directed_options += "\t5. Depth First Search\n";
+        directed_options += "\t6. Print Adjacency Matrix\n";
+        directed_options += "\t7. Single Destination Shortest Path with Bellman Ford\n";
+        directed_options += "Enter q to quit\n";
+        cout << directed_options;
 
         try {
             string user_input = "";
@@ -28,7 +27,7 @@ void start_directed() {
             if (user_input == "q") exit(0);
             else choice = stoi(user_input);
 
-            if (choice > 9 || choice < 1) cout << "Entered value is not valid. Try again";
+            if (choice > 7 || choice < 1) cout << "Entered value is not valid. Try again";
         }
         catch (...) {
             cout << "Something went wrong! Please try again" << endl;
@@ -49,21 +48,15 @@ void start_directed() {
                 d_graph.MSTPrim();
                 break;
             case 4:
-                d_graph.MSTKruskal();
-                break;
-            case 5:
-                d_graph.MSTReverse();
-                break;
-            case 6:
                 d_graph.BFS();
                 break;
-            case 7:
+            case 5:
                 d_graph.DFS();
                 break;
-            case 8:
+            case 6:
                 d_graph.AdjacencyMatrix();
                 break;
-            case 9:
+            case 7:
                 d_graph.BellmanFord();
                 break;
             default:
@@ -78,17 +71,16 @@ void start_undirected() {
     Undirected u_graph;
 
     while (1) {
-        cout << "Pick from the options below for algorithms regarding an undirected graph:" << endl;
-        cout << "\t1. Show the graph visually" << endl;
-        cout << "\t2. Single Source Shortest Path with Dijkstra" << endl;
-        cout << "\t3. Minimum Spanning Tree using Prim's" << endl;
-        cout << "\t4. Minimum Spanning Tree with Kruskal's" << endl;
-        cout << "\t5. Minimum Spanning Tree with Reverse Delete" << endl;
-        cout << "\t6. Breadth First Search" << endl;
-        cout << "\t7. Depth First Search" << endl;
-        cout << "\t8. Print Adjacency Matrix" << endl;
-        cout << "\t9. Single Destination Shortest Path with Bellman Ford" << endl;
-        cout << "Enter q to quit" << endl;
+        string undirected_options = "Pick from the options below for algorithms regarding an undirected graph:\n";
+        undirected_options += "\t1. Show the graph visually\n";
+        undirected_options += "\t2. Single Source Shortest Path with Dijkstra\n";
+        undirected_options += "\t3. Minimum Spanning Tree using Prim's\n";
+        undirected_options += "\t4. Breadth First Search\n";
+        undirected_options += "\t5. Depth First Search\n";
+        undirected_options += "\t6. Print Adjacency Matrix\n";
+        undirected_options += "\t7. Single Destination Shortest Path with Bellman Ford\n";
+        undirected_options += "Enter q to quit\n";
+        cout << undirected_options;
 
         try {
             string user_input = "";
@@ -114,21 +106,15 @@ void start_undirected() {
                 u_graph.MSTPrim();
                 break;
             case 4:
-                u_graph.MSTKruskal();
-                break;
-            case 5:
-                u_graph.MSTReverse();
-                break;
-            case 6:
                 u_graph.BFS();
                 break;
-            case 7:
+            case 5:
                 u_graph.DFS();
                 break;
-            case 8:
+            case 6:
                 u_graph.AdjacencyMatrix();
                 break;
-            case 9:
+            case 7:
                 u_graph.BellmanFord();
                 break;
             default:
@@ -140,7 +126,7 @@ void start_undirected() {
 
 int main(int argc, char **argv)
 {
-    #if __cplusplus >= 201103L
+    #if __cplusplus <= 201603L
         #if _WIN32
             int input_option = getopt(argc, argv, "du");
 
@@ -162,12 +148,15 @@ int main(int argc, char **argv)
                 default: 
                     return 1;
             }
+            cout << "Exiting..." << endl;
 
         #else
             cout << "Sorry, this program is built to run only on Windows!" << endl;
         #endif
     #else
-        cout << "Sorry, this program was built to compile on C++ version >= 11!" << endl;
+        Directed d;
+        d.Dijkstra();
+        // cout << "Sorry, this program was built to compile on C++ version >= 17!" << endl;
     #endif
     return 0;
 }
