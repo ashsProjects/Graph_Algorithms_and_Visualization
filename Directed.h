@@ -6,6 +6,7 @@
 #include <sstream>
 #include <limits>
 #include <iomanip>
+#include <unordered_map>
 
 using namespace std;
 class Directed {
@@ -32,65 +33,51 @@ class Directed {
     };
     struct CompareNodeDistance {
         bool operator()(const pair<double, Node*> &p1, const pair<double, Node*> &p2) {return p1.first > p2.first;}
+        bool operator()(const pair<double, Node> &p1, const pair<double, Node> &p2) {return p1.first > p2.first;}
     };
-    vector<Node> all_nodes;
+    unordered_map<string, Node> all_nodes;
+    unordered_map<string, Node*> all_nodes_as_ptr;
     set<string> node_labels;
     vector<Edge*> all_edges;
+    vector<Edge*> reversed_edges;
     bool contains_negative_edges = false;
+    bool contains_cycles = false;
 
     public:
-        /** 
-         * @param None
-         * @returns A copy constructor declaration. The new object will be the same as rhs.
-        */
+        //constructor definitions
         Directed(const Directed &rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A copy assignment constructor declaration. The new object will be the same as rhs.
-        */
         Directed &operator=(const Directed &rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A move assignment constructor declaration. It copies the resources of rhs to a new object.
-        */
         Directed &operator=(Directed &&rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A move constructor declaration. It copies the resources of rhs to a new object.
-        */
         Directed(Directed &&rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A default constructor declaration.
-        */
         Directed()
         {
             ReadGraph();
-            ShowGraph("normal_directed_graph.png");
+            ShowGraph("normal_directed_graph.png", all_edges);
         }
-        /** 
-         * @param None
-         * @returns A default destructor declaration to delete memory allocated to edges.
-        */
-        ~Directed() {
+        ~Directed()//destructor to free all heap memory
+        {
             for (auto ptr: all_edges) {
+                delete ptr;
+            }
+            for (auto ptr: reversed_edges) {
                 delete ptr;
             }
         }
 
+        //method definitions
         void ReadGraph();
-        void ShowGraph(const string& output_name);
+        void ShowGraph(const string& output_name, vector<Edge*>edges_to_print);
         void Dijkstra();
         void MSTPrim();
         void BFS();
         void DFS();
         void AdjacencyMatrix();
         void BellmanFord();
-        void reset();
+        void ReverseEdges();
+        void Reset();
+        void DetectCycles(string start_node);
+        void IsDAG();
+        void SDSP();
 };
 
 #endif/*DIRECTED_H_INCLUDED*/

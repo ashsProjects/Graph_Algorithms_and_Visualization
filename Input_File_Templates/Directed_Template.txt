@@ -5,6 +5,6 @@
 # Please delete unneeded, empty vertices that do not have any outgoing edges.
 #
 a: [b:2]#For example, this would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5
-b: [a:5, c:1]
+b: [a:5]
 c: [a:1]
 s: [c:7, b:2]

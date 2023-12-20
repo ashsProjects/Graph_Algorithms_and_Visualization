@@ -17,7 +17,7 @@ void start_directed() {
         directed_options += "\t4. Breadth First Search\n";
         directed_options += "\t5. Depth First Search\n";
         directed_options += "\t6. Print Adjacency Matrix\n";
-        directed_options += "\t7. Single Destination Shortest Path with Bellman Ford\n";
+        directed_options += "\t7. Single Source Shortest Path with Bellman Ford\n";
         directed_options += "Enter q to quit\n";
         cout << directed_options;
 
@@ -42,7 +42,6 @@ void start_directed() {
                 break;
             }
             case 2:
-                d_graph.Dijkstra();
                 break;
             case 3:
                 d_graph.MSTPrim();
@@ -78,7 +77,7 @@ void start_undirected() {
         undirected_options += "\t4. Breadth First Search\n";
         undirected_options += "\t5. Depth First Search\n";
         undirected_options += "\t6. Print Adjacency Matrix\n";
-        undirected_options += "\t7. Single Destination Shortest Path with Bellman Ford\n";
+        undirected_options += "\t7. Single Source Shortest Path with Bellman Ford\n";
         undirected_options += "Enter q to quit\n";
         cout << undirected_options;
 
@@ -126,7 +125,7 @@ void start_undirected() {
 
 int main(int argc, char **argv)
 {
-    #if __cplusplus <= 201603L
+    #if __cplusplus >= 201703L
         #if _WIN32
             int input_option = getopt(argc, argv, "du");
 
@@ -154,9 +153,7 @@ int main(int argc, char **argv)
             cout << "Sorry, this program is built to run only on Windows!" << endl;
         #endif
     #else
-        Directed d;
-        d.Dijkstra();
-        // cout << "Sorry, this program was built to compile on C++ version >= 17!" << endl;
+        cout << "Sorry, this program was built to compile on C++ version >= 17!" << endl;
     #endif
     return 0;
 }

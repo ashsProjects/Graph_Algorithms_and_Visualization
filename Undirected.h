@@ -34,6 +34,10 @@ class Undirected {
         */
         Undirected();
 
+        /** 
+         * @param None
+         * @returns None.
+        */
         void ReadGraph();
         void ShowGraph();
         void Dijkstra();
@@ -42,5 +46,7 @@ class Undirected {
         void DFS();
         void AdjacencyMatrix();
         void BellmanFord();
+        void Reset();
+        void DetectCycles();
 };
 #endif/*UNDIRECTED_H_INCLUDED*/
