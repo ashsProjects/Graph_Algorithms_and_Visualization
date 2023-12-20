@@ -54,7 +54,7 @@ For Undirected:
   - IsBipartite(): checks to see if the graph has a odd length cycle in the graph
 
 ## Output
-Most outputs are printed on the console, but there are a few images of graphs generated for the normal, reversed, MST, and Dijkstra's graphs:
+Most outputs are printed on the console, but there are graphs generated for the normal, reversed, Dijkstra, and MST:
 ![Normal](Graph_PNGs/normal_directed_graph.png) ![Prims](Graph_PNGs/reversed_directed_graph.png) ![Prims](Graph_PNGs/dijkstras_directed_graph.png) ![Prims](Graph_PNGs/prims_directed_graph.png)
 
 ## Dependencies
@@ -62,9 +62,9 @@ Most outputs are printed on the console, but there are a few images of graphs ge
 
 ## Compiling
 Clone the repository using:
-'''bash
+```bash
 $ git clone https://github.com/ashsProjects/Graph_Algorithms_and_Visulization.git
-'''
+```
 
 Compile the program:
 ```bash
