@@ -19,13 +19,43 @@ either. This is detailed in the program as well.
 4. *Input_File_Templates* contains the templates used for both graphs; the program will read the adjacency list from this folder
 
 ## Inputting Adjacency List
-
+Within the *Input_File_Templates* folder, there are two files: *Directed_Template.txt* and *Undirected_Template.txt*. Both follow the same format.
+Sample input for a graph with 4 vertices and 4 edges:
+```
+a: [c:7, s:2]
+b: [a:5]
+c: [s:1]
+s: []
+```
+This represents an undirected graph. The four nodes are a, b, c, and d. The edges from a are to c with a weight 7 and to s with weight 2.
+If you need more nodes, add more in the same format "node: [edge:weight]." Seperate edges by a comma inside the square brackets.
+Not following this format will result in errors/incorrect results.
 
 ## Implementation
-
+For Directed:
+  - ShowGraph(): will generate an image of the directed graph from the adjacency list read
+  - Dijkstra(): SSSP using Dijkstra's algorithm to print the shortest path as well as the edges in the path and generate graph with the paths colored in red
+  - MSTPrim(): MST of the graph using Prim's algorithm to print the edges in the spannning tree and generate graph with the min tree colored in red
+  - BFS(): performs a BFS starting at a user-inputted vertex and prints the nodes visited in order
+  - DFS(): performs a DFS starting at a user-inputted vertex and prints the nodes visited in order
+  - AdjacencyMatrix(): prints the adjacency matrix of the graph in console
+  - BellmanFord(): SSSP using Bellman-Ford; alternative to Dijkstra SSSP but slower; works with negative edges and detects negative cycles
+  - ReverseEdges(): reverses all of the edges in the graph and generates the image of the reversed-graph
+  - DetectCycles(): detects if there is a cycle using DFS from a node
+  - IsDAG(): calls DetectCycles() and prints if it is a DAG or not
+  - SDSP(): SDSP from all nodes to a single destination node; reverse all edges of the graph and call Dijkstra on a node
+For Undirected:
+  - ShowGraph(): will generate an image of the undirected graph from the adjacency list read
+  - Dijkstra(): SSSP using Dijkstra's algorithm to print the shortest path as well as the edges in the path and generate graph with the paths colored in red
+  - MSTPrim(): MST of the graph using Prim's algorithm to print the edges in the spannning tree and generate graph with the min tree colored in red
+  - BFS(): performs a BFS starting at a user-inputted vertex and prints the nodes visited in order
+  - DFS(): performs a DFS starting at a user-inputted vertex and prints the nodes visited in order
+  - AdjacencyMatrix(): prints the adjacency matrix of the graph in console
+  - IsBipartite(): checks to see if the graph has a odd length cycle in the graph
 
 ## Output
-
+Most outputs are printed on the console, but there are a few images of graphs generated for the normal, reversed, MST, and Dijkstra's graphs:
+![Normal](Graph_PNGs/normal_directed_graph.png) ![Prims](Graph_PNGs/reversed_directed_graph.png) ![Prims](Graph_PNGs/dijkstras_directed_graph.png) ![Prims](Graph_PNGs/prims_directed_graph.png)
 
 ## Dependencies
 - A C++ Compiler (e.g. GCC, G++)
@@ -37,13 +67,13 @@ $ git clone https://github.com/ashsProjects/Graph_Algorithms_and_Visulization.gi
 '''
 
 Compile the program:
-'''bash
+```bash
 $ g++ -o Graph.exe Main.cc Undirected.cc Directed.cc
-'''
+```
 
 Run the program:
-'''bash
+```bash
 $ ./Graph.exe //for help
 $ ./Graph.exe -u //for undirected
 $ ./Graph.exe -d //for directed
-'''
+```
