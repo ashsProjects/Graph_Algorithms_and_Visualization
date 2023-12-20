@@ -55,6 +55,7 @@ For Undirected:
 
 ## Output
 Most outputs are printed on the console, but there are graphs generated for the normal, reversed, Dijkstra, and MST:
+
 ![Normal](Graph_PNGs/normal_directed_graph.png) ![Prims](Graph_PNGs/reversed_directed_graph.png) ![Prims](Graph_PNGs/dijkstras_directed_graph.png) ![Prims](Graph_PNGs/prims_directed_graph.png)
 
 ## Dependencies
