@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 class BaseGraph {
@@ -250,7 +251,57 @@ class BaseGraph {
 
         void FloydWarshall()
         {
-            cout << "Not yet implemented!" << endl;
+            int num_vertices = node_labels.size();
+            double matrix[num_vertices][num_vertices];
+            vector<string> vec(node_labels.begin(), node_labels.end());
+
+            for (int i = 0; i < vec.size(); i++) {
+                for (int j = 0; j < vec.size(); j++) {
+                    if (i == j) matrix[i][j] = 0;
+                    else {
+                        for (auto &edge: all_nodes[vec.at(i)].edges) {
+                            if (edge->ending_node == vec.at(j)) {
+                                matrix[i][j] = edge->weight;
+                                break;
+                            }
+                            else matrix[i][j] = numeric_limits<double>::infinity();
+                        }
+                    } 
+                }
+            }
+
+            int i, j, k;
+            for (k = 0; k < num_vertices; k++) {
+                for (i = 0; i < num_vertices; i++) {
+                    for (j = 0; j < num_vertices; j++) {
+                        if (matrix[i][j] > (matrix[i][k] + matrix[k][j])
+                            && (matrix[k][j] != numeric_limits<double>::infinity()
+                                && matrix[i][k] != numeric_limits<double>::infinity()))
+                            matrix[i][j] = matrix[i][k] + matrix[k][j];
+                    }
+                }
+            }
+
+            cout << "Shortest distances between every pair of vertices: " << endl;
+            cout << "\t";
+            for (const auto &v: vec) {
+                cout << v << "\t";
+            }
+            cout << endl;
+            
+            for (i = 0; i < num_vertices; i++) {
+                for (j = 0; j < num_vertices; j++) {
+                    if (j == 0) cout << vec[i] << "\t";
+                    if (matrix[i][j] == numeric_limits<double>::infinity()) cout << "INF" << "\t";
+                    else {
+                        stringstream ss;
+                        ss << fixed << setprecision(1) << matrix[i][j];
+                        cout << ss.str() << "\t";
+                        ss.clear();
+                    }
+                }
+                cout << endl;
+            }
         }
 };
 

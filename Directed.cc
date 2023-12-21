@@ -3,10 +3,10 @@
 Directed::Directed()
 {
     ReadGraph("Input_File_Templates/Directed_Template.txt");
-    ShowGraph("normal_directed_graph.png", all_edges);
+    ShowGraph("normal_directed_graph.png", all_edges, "Normal Directed Graph");
 }
 
-void Directed::ShowGraph(const string& output_name, vector<Edge*>edges_to_print)
+void Directed::ShowGraph(const string& output_name, vector<Edge*>edges_to_print, const string& title)
 {
     fstream file("Graphviz_Files/graph_details.txt", ios::out);
     if (!file.is_open()) throw runtime_error("File could not be opened/created.");
@@ -15,6 +15,8 @@ void Directed::ShowGraph(const string& output_name, vector<Edge*>edges_to_print)
     for (const auto& edge: edges_to_print) {
         file << edge->starting_node << " -> " << edge->ending_node << " [label=" << edge->weight << ", " << edge->features << "];" << endl;
     }
+    file << "labelloc=\"t\"" << endl;
+    file << "label=\"" << title << "\"" << endl;
     file << "}";
 
     file.close();
@@ -111,7 +113,8 @@ void Directed::Dijkstra()
         }
     }
 
-    ShowGraph("dijkstras_directed_graph.png", all_edges);
+    string title = "Directed Dijkstra starting at " + start_node;
+    ShowGraph("dijkstras_directed_graph.png", all_edges, title);
     Reset();
 
 }
@@ -176,7 +179,7 @@ void Directed::ReverseEdges()
         reversed_edges.push_back(temp);
     }
 
-    ShowGraph("reversed_directed_graph.png", reversed_edges);
+    ShowGraph("reversed_directed_graph.png", reversed_edges, "Directed Reversed Edges");
 }
 
 void Directed::DetectCycles(string start_node)

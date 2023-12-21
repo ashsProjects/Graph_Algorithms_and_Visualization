@@ -3,10 +3,10 @@
 Undirected::Undirected()
 {
     ReadGraph("Input_File_Templates/Undirected_Template.txt");
-    ShowGraph("normal_undirected_graph.png", all_edges);
+    ShowGraph("normal_undirected_graph.png", all_edges, "Normal Undirected Graph");
 }
 
-void Undirected::ShowGraph(const string& output_name, vector<Edge*>edges_to_print)
+void Undirected::ShowGraph(const string& output_name, vector<Edge*>edges_to_print, const string &title)
 {
     fstream file("Graphviz_Files/graph_details.txt", ios::out);
     if (!file.is_open()) throw runtime_error("File could not be opened/created.");
@@ -15,6 +15,8 @@ void Undirected::ShowGraph(const string& output_name, vector<Edge*>edges_to_prin
     for (const auto& edge: edges_to_print) {
         file << edge->starting_node << " -- " << edge->ending_node << " [label=" << edge->weight << ", " << edge->features << "];" << endl;
     }
+    file << "labelloc=\"t\"" << endl;
+    file << "label=\"" << title << "\"" << endl;
     file << "}";
 
     file.close();
@@ -111,7 +113,8 @@ void Undirected::Dijkstra()
         }
     }
 
-    ShowGraph("dijkstras_undirected_graph.png", all_edges);
+    string title = "Undirected Dijkstra Starting at " + start_node;
+    ShowGraph("dijkstras_undirected_graph.png", all_edges, title);
     Reset();
 }
 
@@ -152,7 +155,7 @@ void Undirected::MSTPrim()
         cout << edge << ", ";
     }
     cout << endl;
-    ShowGraph("prims_undirected_graph.png", all_edges);
+    ShowGraph("prims_undirected_graph.png", all_edges, "MST using Prim");
     Reset();
 }
 
@@ -167,6 +170,49 @@ void Undirected::FindReverseEdge(Edge *edge)
 
 void Undirected::IsBipartite()
 {
-    cout << "Not yet implemented!" << endl;
+    int num_vertices = node_labels.size();
+    double matrix[num_vertices][num_vertices];
+    vector<string> vec(node_labels.begin(), node_labels.end());
+    vector<int> b_w_arr(num_vertices, -1);
+    queue<int> q;
+
+    for (int i = 0; i < vec.size(); i++) {
+        for (int j = 0; j < vec.size(); j++) {
+            if (i == j) matrix[i][j] = 0;
+            else {
+                for (auto &edge: all_nodes[vec.at(i)].edges) {
+                    if (edge->ending_node == vec.at(j)) {
+                        matrix[i][j] = 1;
+                        break;
+                    }
+                    else matrix[i][j] = 0;
+                }
+            } 
+        }
+    }
+
+    b_w_arr[0] = 1;
+    q.push(0);
+
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        if (matrix[u][u] == 1) {
+            cout << "This graph is not bipartite as there is a self-loop" << endl;
+            return;
+        }
+        for (int i = 0; i < num_vertices; i++) {
+            if (matrix[u][i] && b_w_arr[i] == -1) {
+                b_w_arr[i] = 1 - b_w_arr[u];
+                q.push(i);
+            }
+            else if (matrix[u][i] && b_w_arr[i] == b_w_arr[u]) {
+                cout << "This graph is not bipartite" << endl;
+                return;
+            }  
+        }
+    }
+    cout << "This graph is bipartite" << endl;
 }
 

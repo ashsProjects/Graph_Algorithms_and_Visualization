@@ -1,12 +1,32 @@
 strict graph d_graph {
-E -- D [label=2, color=black];
-E -- B [label=1, color=red];
-B -- A [label=10, color=red];
-B -- D [label=3, color=red];
-B -- E [label=1, color=red];
-D -- B [label=3, color=red];
-D -- E [label=2, color=black];
-C -- A [label=5, color=red];
-A -- B [label=10, color=red];
-A -- C [label=5, color=red];
+G -- A [label=11, color=black];
+G -- F [label=1, color=red];
+G -- I [label=7, color=black];
+G -- H [label=8, color=black];
+F -- E [label=2, color=red];
+F -- I [label=6, color=black];
+F -- G [label=1, color=red];
+E -- B [label=4, color=red];
+E -- C [label=7, color=red];
+E -- D [label=10, color=black];
+E -- F [label=2, color=red];
+H -- A [label=4, color=red];
+H -- G [label=8, color=black];
+B -- A [label=8, color=red];
+B -- C [label=7, color=black];
+B -- E [label=4, color=red];
+B -- I [label=2, color=red];
+I -- B [label=2, color=red];
+I -- F [label=6, color=black];
+I -- G [label=7, color=black];
+D -- C [label=9, color=red];
+D -- E [label=10, color=black];
+C -- B [label=7, color=black];
+C -- D [label=9, color=red];
+C -- E [label=7, color=red];
+A -- B [label=8, color=red];
+A -- H [label=4, color=red];
+A -- G [label=11, color=black];
+labelloc="t"
+label="MST using Prim"
 }

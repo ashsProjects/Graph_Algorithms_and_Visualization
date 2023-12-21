@@ -14,7 +14,7 @@ class Directed: public BaseGraph {
         Directed();
 
         //method definitions
-        void ShowGraph(const string& output_name, vector<Edge*>edges_to_print);
+        void ShowGraph(const string& output_name, vector<Edge*>edges_to_print, const string &title);
         void Dijkstra();
         void BellmanFord();
         void ReverseEdges();
