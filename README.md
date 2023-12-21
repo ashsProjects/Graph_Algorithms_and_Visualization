@@ -64,9 +64,9 @@ For Undirected:
   - IsBipartite(): checks to see if the graph has a odd length cycle in the graph
 
 ## Output
-Most outputs are printed on the console, but there are example graphs generated for the normal, reversed, Dijkstra, and MST:
+Most outputs are printed on the console, but there are example graphs generated for the Directed, Directed_Reversed, Dijkstra_from_A, Undirected, and MST:
 
-![Normal](Graph_PNGs/normal_directed_graph.png) ![Reversed](Graph_PNGs/reversed_directed_graph.png) ![Dijkstra](Graph_PNGs/dijkstras_directed_graph.png) ![NormalU](Graph_PNGs/normal_undirected_graph.png) ![Prims](Graph_PNGs/prims_undirected_graph.png)
+<img src="Graph_PNGs/normal_directed_graph.png" width="175"/> <img src="Graph_PNGs/reversed_directed_graph.png" width="175"/> <img src="Graph_PNGs/dijkstras_directed_graph.png" width="175"/> <img src="Graph_PNGs/normal_undirected_graph.png" width="175"/> <img src="Graph_PNGs/prims_undirected_graph.png" width="175"/>
 
 ## Dependencies
 - A C++ Compiler (e.g. GCC, G++)
