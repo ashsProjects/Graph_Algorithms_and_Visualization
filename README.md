@@ -74,7 +74,7 @@ Most outputs are printed on the console, but there are example graphs generated 
 ## Compiling
 Clone the repository using:
 ```bash
-$ git clone https://github.com/ashsProjects/Graph_Algorithms_and_Visulization.git
+$ git clone https://github.com/ashsProjects/Graph_Algorithms_and_Visualization.git
 ```
 
 Compile the program:
