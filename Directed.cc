@@ -1,83 +1,9 @@
 #include "Directed.h"
-#include <fstream>
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <filesystem>
-#include <set>
-#include <queue>
-#include <unordered_map>
-#include <limits>
-#include <stack>
 
-vector<string> split(const string &s, char delim)
+Directed::Directed()
 {
-    vector<string> result;
-    stringstream ss (s);
-    string item;
-
-    while (getline (ss, item, delim)) {
-        result.push_back (item);
-    }
-    return result;
-}
-
-string trim(const string& str)
-{
-    size_t start = str.find_first_not_of(" \t\r\n");
-    size_t end = str.find_last_not_of(" \t\r\n");
-    if (start == string::npos || end == string::npos) return "";
-    return str.substr(start, end - start + 1);
-}
-
-void Directed::ReadGraph()
-{
-    fstream file("Input_File_Templates/Directed_Template.txt");
-    if (!file.is_open()) throw runtime_error("File could not be opened/does not exist.");
-    
-    string line;
-    string node_label;
-    double edge_weight;
-    string edge_label;
-    vector<Edge*> temp_edges;
-    vector<string> splits;
-    
-    while (getline(file, line)) {
-        if (line.front() == '#') continue;
-        else if (line.find('#')) line = line.substr(0, line.find('#'));
-
-        node_label = line.substr(0,line.find_first_of(':'));
-        line = line.substr(line.find('[')+1, line.find(']'));
-        splits = split(line, ',');
-
-        for (auto a: splits) {
-            edge_label = trim(a.substr(0, a.find(':')));
-            try {
-                edge_weight = stod(trim(a.substr(a.find(':')+1, a.size())));
-            }
-            catch (...) {
-                throw(runtime_error("Weight could not be parsed. Please check if all weights are numeric."));
-                exit(1);
-            }
-            if (edge_weight < 0) contains_negative_edges = true;
-
-            Edge *obj = new Edge{node_label, edge_label, edge_weight};
-            temp_edges.push_back(obj);
-            node_labels.insert(edge_label);
-        }
-        node_labels.insert(node_label);
-        all_nodes.insert({node_label, {node_label, temp_edges}});
-        temp_edges.clear();
-    }
-    //copying all edges
-    for (auto &node: all_nodes) {
-        for (auto &edge: node.second.edges) {
-            all_edges.push_back(edge);
-            all_nodes_as_ptr.insert({node.first, &node.second});
-        }
-    }
-
-    file.close();
+    ReadGraph("Input_File_Templates/Directed_Template.txt");
+    ShowGraph("normal_directed_graph.png", all_edges);
 }
 
 void Directed::ShowGraph(const string& output_name, vector<Edge*>edges_to_print)
@@ -149,6 +75,11 @@ void Directed::Dijkstra()
         if (a == start_node) {
             cout << "Node " << start_node << ": 0.00" << endl;
         }
+        else if (all_nodes_as_ptr[a]->predecessor == "") {
+            cout << "Node " << all_nodes_as_ptr[a]->label << ": ";
+            cout << (all_nodes_as_ptr[a]->distance == numeric_limits<double>::infinity() ? "INF" : to_string(all_nodes_as_ptr[a]->distance)) << endl;
+            continue;
+        }
         else {
             string pred_label = a;
             Node a_pred;
@@ -185,153 +116,13 @@ void Directed::Dijkstra()
 
 }
 
-void Directed::MSTPrim()
-{
-    priority_queue<pair<double, Edge*>, vector<pair<double, Edge*>>, CompareEdgeWeight> p_queue;
-    int min_cost = 0;
-    string start_node = all_nodes.begin()->first;
-    vector<string> edges_to_print;
-
-    cout << "Initializing the starting node as " << start_node << endl;
-
-    all_nodes[start_node].visited = true;
-    for (auto &edge: all_nodes[start_node].edges) {
-        p_queue.push({edge->weight, edge});
-    }
-
-    while (!p_queue.empty()) {
-        double u_weight = p_queue.top().first;
-        Edge *u_edge = p_queue.top().second;
-        p_queue.pop();
-
-        if (!all_nodes[u_edge->ending_node].visited) {
-            min_cost += u_weight;
-            all_nodes[u_edge->ending_node].visited = true;
-            u_edge->features = "color=red";
-            edges_to_print.push_back(u_edge->to_str());
-
-            for (auto &edge: all_nodes[u_edge->ending_node].edges) {
-                if (!all_nodes[edge->ending_node].visited) p_queue.push({edge->weight, edge});
-            }
-        }
-    }
-    cout << "Minimum Cost of MST with Prim's algorithm: " << min_cost << endl;
-    cout << "Edges in MST: ";
-    for (auto &edge: edges_to_print) {
-        cout << edge << ", ";
-    }
-    cout << endl;
-    ShowGraph("prims_directed_graph.png", all_edges);
-    Reset();
-}
-
-void Directed::BFS()
-{
-    string start_node;
-    cout << "Enter the starting node (case sensitive): ";
-    cin >> start_node;
-    if (node_labels.find(start_node) == node_labels.end()) {
-        cerr << "Node not found in the graph. Try again" << endl;
-        return;
-    }
-
-    queue<string> node_queue;
-    node_queue.push(start_node);
-
-    cout << "Nodes visited in order using BFS: ";
-    while (!node_queue.empty()) {
-        string current = node_queue.front();
-        node_queue.pop();
-        Node *current_node = all_nodes_as_ptr[current];
-
-        if (!current_node->visited) {
-            cout << current;
-            current_node->visited = true;
-            for (const auto &edge: current_node->edges) {
-                if (!all_nodes_as_ptr[edge->ending_node]->visited) node_queue.push(edge->ending_node);
-            }
-            cout << " -> ";
-        }     
-    }
-    cout << "END" << endl;
-    Reset();
-}
-
-void Directed::DFS()
-{
-    string start_node;
-    cout << "Enter the starting node (case sensitive): ";
-    cin >> start_node;
-    if (node_labels.find(start_node) == node_labels.end()) {
-        cerr << "Node not found in the graph. Try again" << endl;
-        return;
-    }
-
-    stack<string> node_stack;
-    node_stack.push(start_node);
-
-    cout << "Nodes visited in order using DFS: ";
-    while (!node_stack.empty()) {
-        string current = node_stack.top();
-        node_stack.pop();
-        Node *current_node = all_nodes_as_ptr[current];
-
-        if (!current_node->visited) {
-            cout << current;
-            current_node->visited = true;
-            for (const auto &edge: current_node->edges) {
-                if (!all_nodes_as_ptr[edge->ending_node]->visited) node_stack.push(edge->ending_node);
-            }
-            cout << " -> ";
-        }     
-    }
-    cout << "END" << endl;
-    Reset();
-}
-
-void Directed::AdjacencyMatrix()
-{
-    int matrix_size = node_labels.size() + 1;
-    string matrix[matrix_size][matrix_size];
-    deque<string> d(node_labels.begin(), node_labels.end());
-
-    cout << " |";
-    int i = 1;
-    for (const auto &a: d) {
-        matrix[0][i] = a;
-        cout << matrix[0][i] << " ";
-        i++;
-    }
-    cout << endl;
-
-    for (i = 1; i < matrix_size; i++) {
-        for (int j = 0; j < matrix_size; j++) {
-            if (j == 0) {
-                matrix[i][j] = d.front();
-                d.pop_front();
-            }
-            else {
-                for (const auto &edge: all_nodes.at(matrix[i][0]).edges) {
-                    if (edge->starting_node == matrix[i][0] && edge->ending_node == matrix[0][j]) {
-                        matrix[i][j] = "1";
-                        break;
-                    }
-                    else matrix[i][j] = "0";  
-                }
-            }
-            cout << matrix[i][j] << " ";   
-        }
-        cout << endl;
-    }
-}
-
 void Directed::BellmanFord()
 {
     string start_node;
     int num_vertices = node_labels.size();
     int num_edges = all_edges.size();
 
-    cout << "Enter the destination node (case sensitive): ";
+    cout << "Enter the starting node (case sensitive): ";
     cin >> start_node;
     if (node_labels.find(start_node) == node_labels.end()) {
         cerr << "Node not found in the graph. Try again" << endl;
@@ -376,19 +167,6 @@ void Directed::BellmanFord()
         cout << "\tDistance to node " << node.first << ": " << node.second << endl; 
     }
 
-}
-
-void Directed::Reset()
-{
-    //Reset all labels
-    for (auto &edge: all_edges) {
-        edge->features = "color=black";
-    }
-    for (auto &node: all_nodes) {
-        node.second.visited = false;
-        node.second.predecessor = "";
-        node.second.distance = numeric_limits<double>::infinity();;
-    }
 }
 
 void Directed::ReverseEdges()

@@ -1,52 +1,23 @@
 #ifndef UNDIRECTED_H_DEFINED
 #define UNDIRECTED_H_DEFINED
+#include "BaseGraph.h"
 
 using namespace std;
-class Undirected {
+class Undirected : public BaseGraph {
     public:
-        /** 
-         * @param None
-         * @returns A copy constructor declaration. The new object will be the same as rhs.
-        */
+        //constructor definitions
         Undirected(const Undirected &rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A copy assignment constructor declaration. The new object will be the same as rhs.
-        */
         Undirected &operator=(const Undirected &rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A move assignment constructor declaration. It copies the resources of rhs to a new object.
-        */
         Undirected &operator=(Undirected &&rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A move constructor declaration. It copies the resources of rhs to a new object.
-        */
         Undirected(Undirected &&rhs) = default;
-
-        /** 
-         * @param None
-         * @returns A default constructor declaration.
-        */
+        ~Undirected() = default;
         Undirected();
-
-        /** 
-         * @param None
-         * @returns None.
-        */
-        void ReadGraph();
-        void ShowGraph();
+        
+        //method definitions
+        void ShowGraph(const string& output_name, vector<Edge*>edges_to_print);
         void Dijkstra();
         void MSTPrim();
-        void BFS();
-        void DFS();
-        void AdjacencyMatrix();
-        void BellmanFord();
-        void Reset();
-        void DetectCycles();
+        void IsBipartite();
+        void FindReverseEdge(Edge *edge);
 };
 #endif/*UNDIRECTED_H_INCLUDED*/

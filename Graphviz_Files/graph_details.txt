@@ -1,7 +1,12 @@
-strict digraph d_graph {
-s -> c [label=7, color=black];
-s -> b [label=2, color=black];
-c -> a [label=1, color=black];
-b -> a [label=5, color=black];
-a -> b [label=2, color=black];
+strict graph d_graph {
+E -- D [label=2, color=black];
+E -- B [label=1, color=red];
+B -- A [label=10, color=red];
+B -- D [label=3, color=red];
+B -- E [label=1, color=red];
+D -- B [label=3, color=red];
+D -- E [label=2, color=black];
+C -- A [label=5, color=red];
+A -- B [label=10, color=red];
+A -- C [label=5, color=red];
 }

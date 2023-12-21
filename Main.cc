@@ -1,8 +1,7 @@
-#include <iostream>
 #include <unistd.h>
-#include <filesystem>
 #include "Undirected.h"
 #include "Directed.h"
+#include "BaseGraph.h"
 
 using namespace std;
 void start_directed() {
@@ -11,23 +10,26 @@ void start_directed() {
 
     while (1) {
         string directed_options = "Pick from the options below for algorithms regarding an directed graph:\n";
-        directed_options += "\t1. Show the graph visually\n";
-        directed_options += "\t2. Single Source Shortest Path with Dijkstra\n";
-        directed_options += "\t3. Minimum Spanning Tree using Prim's\n";
+        directed_options += "\t1. Show the directed graph\n";
+        directed_options += "\t2. Single Source Shortest Path using Dijkstra\n";
+        directed_options += "\t3. Single Source Shortest Path using Bellman Ford\n";
         directed_options += "\t4. Breadth First Search\n";
         directed_options += "\t5. Depth First Search\n";
         directed_options += "\t6. Print Adjacency Matrix\n";
-        directed_options += "\t7. Single Source Shortest Path with Bellman Ford\n";
-        directed_options += "Enter q to quit\n";
-        cout << directed_options;
+        directed_options += "\t7. Show the graph with all edges reversed\n";
+        directed_options += "\t8. Check if current graph is a DAG\n";
+        directed_options += "\t9. Single Destination Shortest Path using Reversed Dijkstra\n";
+        directed_options += "\t10. All Pairs Shortest Path using Floyd-Warshall\n"; 
+        directed_options += "\tq to quit\n";
 
+        cout << directed_options;
         try {
             string user_input = "";
             cin >> user_input;
-            if (user_input == "q") exit(0);
+            if (user_input == "q") return;
             else choice = stoi(user_input);
 
-            if (choice > 7 || choice < 1) cout << "Entered value is not valid. Try again";
+            if (choice > 10 || choice < 1) cout << "Entered value is not valid. Try again";
         }
         catch (...) {
             cout << "Something went wrong! Please try again" << endl;
@@ -37,26 +39,57 @@ void start_directed() {
         switch (choice) {
             case 1:
             {
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 string command = filesystem::current_path().string() + "\\Graph_PNGs\\normal_directed_graph.png";
                 system(command.c_str());
+                cout << "Graph was opened in another window. It can also be found under Graph_PNGs\\normal_directed_graph.png" << endl;
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             }
             case 2:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.Dijkstra();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 3:
-                d_graph.MSTPrim();
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.BellmanFord();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 4:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 d_graph.BFS();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 5:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 d_graph.DFS();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 6:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 d_graph.AdjacencyMatrix();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 7:
-                d_graph.BellmanFord();
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.ReverseEdges();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
+                break;
+            case 8:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.IsDAG();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
+                break;
+            case 9:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.SDSP();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
+                break;
+            case 10:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                d_graph.FloydWarshall();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             default:
                 break;
@@ -71,23 +104,24 @@ void start_undirected() {
 
     while (1) {
         string undirected_options = "Pick from the options below for algorithms regarding an undirected graph:\n";
-        undirected_options += "\t1. Show the graph visually\n";
+        undirected_options += "\t1. Show the undirected graph\n";
         undirected_options += "\t2. Single Source Shortest Path with Dijkstra\n";
         undirected_options += "\t3. Minimum Spanning Tree using Prim's\n";
         undirected_options += "\t4. Breadth First Search\n";
         undirected_options += "\t5. Depth First Search\n";
         undirected_options += "\t6. Print Adjacency Matrix\n";
-        undirected_options += "\t7. Single Source Shortest Path with Bellman Ford\n";
+        undirected_options += "\t7. Check if graph is bipartite\n";
+        undirected_options += "\t8. All Pairs Shortest Path with Floyd-Warshall\n";
         undirected_options += "Enter q to quit\n";
         cout << undirected_options;
 
         try {
             string user_input = "";
             cin >> user_input;
-            if (user_input == "q") exit(0);
+            if (user_input == "q") return;
             else choice = stoi(user_input);
 
-            if (choice > 9 || choice < 1) cout << "Entered value is not valid. Try again";
+            if (choice > 8 || choice < 1) cout << "Entered value is not valid. Try again";
         }
         catch (...) {
             cout << "Something went wrong! Try again" << endl;
@@ -96,25 +130,48 @@ void start_undirected() {
 
         switch (choice) {
             case 1:
-                u_graph.ShowGraph();
+            {
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                string command = filesystem::current_path().string() + "\\Graph_PNGs\\normal_undirected_graph.png";
+                system(command.c_str());
+                cout << "Graph was opened in another window. It can also be found under Graph_PNGs\\normal_undirected_graph.png" << endl;
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
+            }
             case 2:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 u_graph.Dijkstra();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 3:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 u_graph.MSTPrim();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 4:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 u_graph.BFS();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 5:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 u_graph.DFS();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 6:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
                 u_graph.AdjacencyMatrix();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             case 7:
-                u_graph.BellmanFord();
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                u_graph.IsBipartite();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
+                break;
+            case 8:
+                printf("\x1B[31m------------------------------BEGIN OUTPUT----------------------------\033[0m\n");
+                u_graph.FloydWarshall();
+                printf("\x1B[31m-------------------------------END OUTPUT----------------------------\033[0m\n");
                 break;
             default:
                 break;
@@ -125,24 +182,35 @@ void start_undirected() {
 
 int main(int argc, char **argv)
 {
-    #if __cplusplus >= 201703L
+    #if __cplusplus >= 201603L
         #if _WIN32
             int input_option = getopt(argc, argv, "du");
 
             if (argc <= 1) {
-                cout << "-------------------------------------" << endl;
-                cout << "Help regarding running this program: " << endl;
-                cout << "\t-Use the flag -u to run the program for undirected graphs (./Main.exe -u)" << endl;
-                cout << "\t-Use the flag -d to run the program for directed graphs (./Main.exe -d)" << endl;
-                cout << "\t*Please make sure to fill the template for either first. Both are located under ./Input_File_Templates." << endl;
+                printf("\x1B[31m--------------------------BEGIN HELP----------------------------\033[0m\n");
+                cout << "Use the flag -u to run the program for undirected graphs (./Graph.exe -u)" << endl;
+                cout << "Use the flag -d to run the program for directed graphs (./Graph.exe -d)" << endl;
+                cout << "Please make sure to fill the template for either first. Both are located under ./Input_File_Templates." << endl;
+                cout << "For more information, reference the README.md" << endl;
+                printf("\x1B[31m----------------------------END HELP----------------------------\033[0m\n");
             }
 
             switch (input_option) {
                 case 'd':
-                    start_directed();
+                    try {
+                        start_directed();
+                    }
+                    catch (...) {
+                        cerr << "Something went wrong! Make sure your inputs are correct" << endl;
+                    }
                     break;
                 case 'u':
-                    start_undirected();
+                    try {
+                        start_undirected();
+                    }
+                    catch (...) {
+                        cerr << "Something went wrong! Make sure your inputs are correct" << endl;
+                    }
                     break;
                 default: 
                     return 1;

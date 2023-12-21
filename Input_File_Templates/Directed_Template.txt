@@ -2,9 +2,15 @@
 # anything. By default, they are A, B, C, and D. You can also add more to the end in the same format. To add edges, you can
 # enter it within the list for a vertex. Within this list should be the end node and the weight of that edge separated by a colon. 
 # To add more outgoing edges from a vertex, use commas to separate them. Use # for comments as they will be ignored.
-# Please delete unneeded, empty vertices that do not have any outgoing edges.
+# Please define empty vertices that do not have any outgoing edges too as not having them will produce incorrect results.
+# For example, this "a: [b:2]" would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5.
 #
-a: [b:2]#For example, this would be for a graph that has an edge from A to B of weight 10 and another to C of weight 5
-b: [a:5]
-c: [a:1]
-s: [c:7, b:2]
+A: [B:3, F:2]
+B: [C:4, E:5]
+C: [A:3, D:3]
+D: [H:2]
+E: [G:3]
+F: [E:4]
+G: []
+H: [E:6, G:1]
+I: [A:6]
