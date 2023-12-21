@@ -69,7 +69,9 @@ For Undirected:
 ## Output
 Most outputs are printed on the console, but there are example graphs generated for the Directed, Directed_Reversed, Dijkstra_from_A, Undirected, and MST:
 
-<img src="Graph_PNGs/normal_directed_graph.png" width="175"/> <img src="Graph_PNGs/reversed_directed_graph.png" width="175"/> <img src="Graph_PNGs/dijkstras_directed_graph.png" width="175"/> <img src="Graph_PNGs/normal_undirected_graph.png" width="175"/> <img src="Graph_PNGs/prims_undirected_graph.png" width="175"/>
+<img src="Graph_PNGs/normal_directed_graph.png" width="175"/> <img src="Graph_PNGs/reversed_directed_graph.png" width="175"/> <img src="Graph_PNGs/dijkstras_directed_graph.png" width="175"/>
+
+<img src="Graph_PNGs/normal_undirected_graph.png" width="175"/> <img src="Graph_PNGs/prims_undirected_graph.png" width="175"/> <img src="Graph_PNGs/dijkstras_undirected_graph.png" width="175"/>
 
 ## Dependencies
 - A C++ Compiler (e.g. GCC, G++)
